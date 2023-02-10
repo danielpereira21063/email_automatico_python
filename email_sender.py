@@ -25,8 +25,3 @@ class EmailSender:
         except Exception as ex:
             print("Erro ao enviar email: {}".format(ex))
             return False
-
-
-    def __del__(self):
-        self.server.quit()
-    
