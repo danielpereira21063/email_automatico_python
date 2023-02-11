@@ -2,6 +2,12 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
+headers = {
+    "Accept": "*/*",
+    "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7,zh-TW;q=0.6,zh-CN;q=0.5,zh;q=0.4",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
+}
+
 def encontrar_emails(url):
     html = obter_html_text(url)
     EMAILS = []
@@ -15,10 +21,11 @@ def encontrar_emails(url):
 
 def obter_html_text(url):
     try:
-        req = requests.get(url)
+        req = requests.get(url, headers, timeout=5)
         html = req.text
         return html
     except Exception as ex:
+        print(ex)
         return ""
     
 
@@ -36,12 +43,11 @@ def encontrar_novas_urls(url):
 
     URLS = []
     for link in links:
-        url = link["href"]
-
-        if ("http://" in url or "https://" in url):
-            if ".google." not in url:
+        if "http" in str(link):
+            url = link["href"]
+            
+            if "google." not in url and "youtube." not in url and "twitch." not in url and "tiktok." not in url and "facebook." not in url and "github." not in url and "twitter." not in url:
                 url = url.replace("/url?q=", "")
                 URLS.append(url)
-    
-    return URLS
         
+    return URLS

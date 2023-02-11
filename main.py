@@ -18,13 +18,17 @@ def enviar_email(email):
         print("Email já enviado anteriormente para {}".format(email))
         
 
-# url = "https://www.trackawesomelist.com/lukasz-madon/awesome-remote-job/"
+# url = "https://contrata-se-devs.lucascaton.com.br/"
 # url = "https://remoteintech.company"
 # url = "https://www.trackawesomelist.com/lukasz-madon/awesome-remote-job/"
 # url = "https://github.com/remoteintech/remote-jobs"
-url = "https://github.com/guru-br/catalogo_empresas"
-
-alvos = encontrar_novas_urls(url)
+# url = "https://github.com/guru-br/catalogo_empresas"
+# url = "https://github.com/AfonsoFeliciano/Empresas-Brasileiras-Trabalho-Remoto"
+# url = "https://github.com/leogregianin/mato-grosso-tech-companies"
+# url = "https://github.com/pythonbrasil/pyBusinesses-BR"
+# url = "https://github.com/clj-br/vagas"
+# url = "https://github.com/guia-de-sistemas-embarcados/lista-de-empresas/"
+# url = "https://www.jivochat.com.br/blog/marketing/agencias-de-marketing-digital.html"
 
 
 def ler_emails_arquivo():
@@ -48,36 +52,28 @@ def salvar_email_arquivo(email):
             print("{} já salvo anteriormente".format(email))
 
 
+def executar_crawler(alvo, nivel=2):
+    try:    
+        emails = encontrar_emails(alvo)
+        print("{} encontrado{}".format(len(emails), "s" if len(emails) != 1 else ""))
+        for email in emails:
+            salvar_email_arquivo(email)
+        
+        if nivel == 3:
+            alvos = encontrar_novas_urls(alvo)
+            for i, alvo in enumerate(alvos):
+                print("Buscando emails do alvo {} - Nível {} ({} de {})".format(alvo, nivel, i, len(alvos)))
+                executar_crawler(alvo)
 
-# lock = threading.Lock()
 
-def inicio():
-    # lock.acquire()
-    i = 1
-    try:
-        for alvo in alvos:
-            print("Buscando emails do alvo {} de {}".format(i, len(alvos)))
-            emails = encontrar_emails(alvo)
-            print("{} encontrado{}".format(len(emails), "s" if len(emails) != 1 else ""))
-            for email in emails:
-                salvar_email_arquivo(email)
-            print("\n")
-            i+=1
-            # time.sleep(1)
+        print("\n")
+        # time.sleep(1)
     except Exception as ex:
         print(ex)
 
 
-inicio()
+alvos = encontrar_novas_urls(url)
 
-# THREADS = []
-
-# for i in range(100):
-#     thread = threading.Thread(target=inicio)
-#     THREADS.append(thread)
-
-# for thread in THREADS:
-#     thread.start()
-            
-# for thread in THREADS:
-#     thread.join()
+for i, alvo in enumerate(alvos):
+    print("Buscando emails do alvo {} - {} de {}".format(alvo, i, len(alvos)))
+    executar_crawler(alvo, 3)
