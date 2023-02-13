@@ -5,7 +5,7 @@ from crawler import *
 import time
 import threading
 
-sender = EmailSender("danielsanches6301@gmail.com", "bpzulbhikogwtons")
+sender = EmailSender("", "")
 
 def enviar_email(email, assunto, conteudo, arquivo=None):
     if not email_existe(email):
