@@ -98,3 +98,11 @@ selecao@contatocrh.com.br
 falecom@elementaisconsultoria.com.br
 valorh@valorrh.com.br
 contato@agenciacirculo.com.br
+
+
+(
+    andre.barcellos@franqueadolinx.com.br,
+    joao.rodrigues@franqueadolinx.com.br,
+    nildson.resende@franqueadolinx.com.br,
+    antonio.leite@franqueadolinx.com.br
+) -> servidor rejeitando
