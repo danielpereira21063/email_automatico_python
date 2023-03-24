@@ -39,8 +39,6 @@ class EmailSender:
             print("{} - Email enviado para: {}".format(now, destinatario))
             return True
         except Exception as ex:
-            print("Erro ao enviar email: {}".format(ex))
-            if "please run connect" in ex:
-                print("Erro 'run connect'. Aguardando 60 segundos...")
-                time.sleep(60)
+            #print("Erro ao enviar email: {}\nAguardando 5 minutos para próxima tentativa...".format(ex))
+            #time.sleep(300)
             return False
